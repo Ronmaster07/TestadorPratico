@@ -17,12 +17,10 @@ import android.view.MenuItem;
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
-    private String [] imagens = new String[] {
-            "https://api.pcloud.com/getpubthumb?code=XZPIu37ZnxHGdRwroPytdsIF159ISfSSozS7&linkpassword=undefined&size=800x448&crop=0&type=auto",
-            "https://api.pcloud.com/getpubthumb?code=XZvIu37ZTahAVsJFCRXomx4QfNWBBYC5YY0V&linkpassword=undefined&size=1280x720&crop=0&type=auto",
-            "https://api.pcloud.com/getpubthumb?code=XZiIu37ZGRiMcRxPsUbud1cSVLJaUJuqAY0V&linkpassword=undefined&size=1365x680&crop=0&type=auto",
-            "https://api.pcloud.com/getpubthumb?code=XZcIu37Zc7TPakyUDeJXbSQD3UDoWjDjDIGX&linkpassword=undefined&size=1000x848&crop=0&type=auto",
-            "https://api.pcloud.com/getpubthumb?code=XZfIu37ZMLWo0jpdD74CTbkjdIbGpu4hSePy&linkpassword=undefined&size=1366x768&crop=0&type=auto"};
+    private Integer[] imagens = new Integer[]{
+            R.drawable.bleach_op13,
+            R.drawable.commission_by_theprophecy_dasiykx,
+            R.drawable.one, R.drawable.tw4wt};
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

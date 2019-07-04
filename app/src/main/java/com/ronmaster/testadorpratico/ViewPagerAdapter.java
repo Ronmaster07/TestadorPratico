@@ -17,9 +17,9 @@ public class ViewPagerAdapter  extends PagerAdapter {
 
     private Context context;
 
-    private String [] imagens ;
+    private Integer [] imagens ;
 
-    ViewPagerAdapter(Context context, String[] imagens) {
+    ViewPagerAdapter(Context context, Integer[] imagens) {
         this.context = context;
         this.imagens = imagens;
     }

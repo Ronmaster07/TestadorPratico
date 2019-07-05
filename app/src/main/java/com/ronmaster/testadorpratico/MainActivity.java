@@ -13,14 +13,18 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.ImageView;
+import android.widget.ViewFlipper;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
-    private Integer[] imagens = new Integer[]{
+  /*  private Integer[] imagens = new Integer[]{
             R.drawable.bleach_op13,
             R.drawable.commission_by_theprophecy_dasiykx,
-            R.drawable.one, R.drawable.tw4wt};
+            R.drawable.one, R.drawable.tw4wt};  */
+
+    ViewFlipper v_flipper;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,11 +51,34 @@ public class MainActivity extends AppCompatActivity
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
-
+/*
         ViewPager viewPager = (ViewPager) findViewById(R.id.view_pager);
         ViewPagerAdapter adapter = new ViewPagerAdapter(this, imagens);
-        viewPager.setAdapter(adapter);
+        viewPager.setAdapter(adapter);  */
+
+        int images[] = new int[] {R.drawable.bleach_op13,
+                R.drawable.commission_by_theprophecy_dasiykx,
+                R.drawable.one, R.drawable.tw4wt };
+
+        v_flipper = findViewById(R.id.v_flipper);
+
+        for (int i = 0; i< images.length; i++) {
+            flipperImagens(images[i]);
+        }
     }
+
+        public void flipperImagens(int imagem){
+
+            ImageView imageView = new ImageView(this);
+            imageView.setBackgroundResource(imagem);
+            imageView.setCropToPadding(true);
+
+            v_flipper.addView(imageView);
+            v_flipper.setFlipInterval(4000);
+            v_flipper.setInAnimation(this, android.R.anim.slide_in_left);
+            v_flipper.setOutAnimation(this, android.R.anim.slide_out_right);
+            v_flipper.startFlipping();
+        }
 
     @Override
     public void onBackPressed() {

@@ -16,15 +16,20 @@ import android.view.MenuItem;
 import android.widget.ImageView;
 import android.widget.ViewFlipper;
 
+import java.util.Timer;
+import java.util.TimerTask;
+
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
-  /*  private Integer[] imagens = new Integer[]{
-            R.drawable.bleach_op13,
-            R.drawable.commission_by_theprophecy_dasiykx,
-            R.drawable.one, R.drawable.tw4wt};  */
+    private String [] imagens = new String[] {
+            "https://api.pcloud.com/getpubthumb?code=XZPIu37ZnxHGdRwroPytdsIF159ISfSSozS7&linkpassword=undefined&size=800x448&crop=0&type=auto",
+            "https://api.pcloud.com/getpubthumb?code=XZvIu37ZTahAVsJFCRXomx4QfNWBBYC5YY0V&linkpassword=undefined&size=1280x720&crop=0&type=auto",
+            "https://api.pcloud.com/getpubthumb?code=XZiIu37ZGRiMcRxPsUbud1cSVLJaUJuqAY0V&linkpassword=undefined&size=1365x680&crop=0&type=auto",
+            "https://api.pcloud.com/getpubthumb?code=XZcIu37Zc7TPakyUDeJXbSQD3UDoWjDjDIGX&linkpassword=undefined&size=1000x848&crop=0&type=auto",
+            "https://api.pcloud.com/getpubthumb?code=XZfIu37ZMLWo0jpdD74CTbkjdIbGpu4hSePy&linkpassword=undefined&size=1366x768&crop=0&type=auto"};
 
-    ViewFlipper v_flipper;
+    ViewPager viewPager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,34 +56,14 @@ public class MainActivity extends AppCompatActivity
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
-/*
-        ViewPager viewPager = (ViewPager) findViewById(R.id.view_pager);
+
+        viewPager = (ViewPager) findViewById(R.id.view_pager);
         ViewPagerAdapter adapter = new ViewPagerAdapter(this, imagens);
-        viewPager.setAdapter(adapter);  */
+        viewPager.setAdapter(adapter);
 
-        int images[] = new int[] {R.drawable.bleach_op13,
-                R.drawable.commission_by_theprophecy_dasiykx,
-                R.drawable.one, R.drawable.tw4wt };
-
-        v_flipper = findViewById(R.id.v_flipper);
-
-        for (int i = 0; i< images.length; i++) {
-            flipperImagens(images[i]);
-        }
+        Timer timer = new Timer();
+        timer.scheduleAtFixedRate(new MyTimerTask(), 4000,4000);
     }
-
-        public void flipperImagens(int imagem){
-
-            ImageView imageView = new ImageView(this);
-            imageView.setBackgroundResource(imagem);
-            imageView.setCropToPadding(true);
-
-            v_flipper.addView(imageView);
-            v_flipper.setFlipInterval(4000);
-            v_flipper.setInAnimation(this, android.R.anim.slide_in_left);
-            v_flipper.setOutAnimation(this, android.R.anim.slide_out_right);
-            v_flipper.startFlipping();
-        }
 
     @Override
     public void onBackPressed() {
@@ -136,4 +121,35 @@ public class MainActivity extends AppCompatActivity
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }
+
+    public class MyTimerTask extends TimerTask{
+
+        @Override
+        public void run() {
+
+            MainActivity.this.runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    if(viewPager.getCurrentItem() == 0){
+                        viewPager.setCurrentItem(1);
+                    }
+                    else if(viewPager.getCurrentItem() == 1){
+                        viewPager.setCurrentItem(2);
+                    }
+                    else if(viewPager.getCurrentItem() == 2){
+                        viewPager.setCurrentItem(3);
+                    }
+                    else if(viewPager.getCurrentItem() == 3){
+                        viewPager.setCurrentItem(4);
+                    }
+                    else
+                    {
+                        viewPager.setCurrentItem(0);
+                    }
+                }
+            });
+
+        }
+    }
+
 }

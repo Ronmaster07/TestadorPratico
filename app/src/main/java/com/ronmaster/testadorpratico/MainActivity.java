@@ -1,8 +1,10 @@
 package com.ronmaster.testadorpratico;
 
+import android.media.Image;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewPager;
 import android.view.View;
 import android.support.design.widget.NavigationView;
@@ -14,6 +16,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ViewFlipper;
 
 import java.util.Timer;
@@ -30,6 +33,9 @@ public class MainActivity extends AppCompatActivity
             "https://api.pcloud.com/getpubthumb?code=XZfIu37ZMLWo0jpdD74CTbkjdIbGpu4hSePy&linkpassword=undefined&size=1366x768&crop=0&type=auto"};
 
     ViewPager viewPager;
+    LinearLayout sliderDotsPainel;
+    private int dotsCount;
+    private ImageView[] dots;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,9 +63,47 @@ public class MainActivity extends AppCompatActivity
         navigationView.setNavigationItemSelectedListener(this);
 
 
+        sliderDotsPainel = (LinearLayout) findViewById(R.id.SliderDots);
+
         viewPager = (ViewPager) findViewById(R.id.view_pager);
         ViewPagerAdapter adapter = new ViewPagerAdapter(this, imagens);
         viewPager.setAdapter(adapter);
+
+        dotsCount = adapter.getCount();
+        dots = new ImageView[dotsCount];
+
+        for(int i = 0; i < dotsCount; i++){
+            dots[i] = new ImageView(this);
+            dots[i].setImageDrawable(ContextCompat.getDrawable(getApplicationContext(), R.drawable.active_dot_none));
+
+            LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT,LinearLayout.LayoutParams.WRAP_CONTENT);
+
+            params.setMargins(8,0,8,0);
+            sliderDotsPainel.addView(dots[i], params);
+        }
+        dots[0].setImageDrawable(ContextCompat.getDrawable(getApplicationContext(), R.drawable.active_dot));
+
+        viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            @Override
+            public void onPageScrolled(int i, float v, int i1) {
+
+            }
+
+            @Override
+            public void onPageSelected(int position) {
+
+                for(int i = 0; i< dotsCount; i++){
+                    dots[i].setImageDrawable(ContextCompat.getDrawable(getApplicationContext(), R.drawable.active_dot_none));
+                }
+                dots[position].setImageDrawable(ContextCompat.getDrawable(getApplicationContext(), R.drawable.active_dot));
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int i) {
+
+            }
+        });
+
 
         Timer timer = new Timer();
         timer.scheduleAtFixedRate(new MyTimerTask(), 4000,4000);

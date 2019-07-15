@@ -6,6 +6,8 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewPager;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -19,6 +21,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ViewFlipper;
 
+import java.util.ArrayList;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -36,6 +39,11 @@ public class MainActivity extends AppCompatActivity
     LinearLayout sliderDotsPainel;
     private int dotsCount;
     private ImageView[] dots;
+
+    //vars categoria
+    private ArrayList<String> mNomes = new ArrayList<>();
+    private ArrayList<Integer> mImagensURL = new ArrayList<>();
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -106,7 +114,9 @@ public class MainActivity extends AppCompatActivity
 
 
         Timer timer = new Timer();
-        timer.scheduleAtFixedRate(new MyTimerTask(), 4000,4000);
+        timer.scheduleAtFixedRate(new MyTimerTask(), 1000,4000);
+
+        getImagesInit();
     }
 
     @Override
@@ -194,6 +204,57 @@ public class MainActivity extends AppCompatActivity
             });
 
         }
+    }
+
+
+    private void getImagesInit(){
+
+        mImagensURL.add(R.drawable.comida);
+        mNomes.add("Comida caseira");
+
+        mImagensURL.add(R.drawable.padaria);
+        mNomes.add("Padarias e lanchonetes");
+
+        mImagensURL.add(R.drawable.doceirias);
+        mNomes.add("Docerias");
+
+        mImagensURL.add(R.drawable.salgados);
+        mNomes.add("Salgados e tele-entrega");
+
+        mImagensURL.add(R.drawable.restaurantes);
+        mNomes.add("Restaurantes");
+
+        mImagensURL.add(R.drawable.acougues);
+        mNomes.add("Açougues");
+
+        mImagensURL.add(R.drawable.lojas_de_roupa);
+        mNomes.add("Moda e vestuário");
+
+        mImagensURL.add(R.drawable.supermercados_da_regiao);
+        mNomes.add("Mercados");
+
+        mImagensURL.add(R.drawable.medicos);
+        mNomes.add("Saúde");
+
+        mImagensURL.add(R.drawable.farmacia);
+        mNomes.add("Farmacias");
+
+        mImagensURL.add(R.drawable.servicos);
+        mNomes.add("Serviços diversos");
+
+        mImagensURL.add(R.drawable.festas_e_eventos);
+        mNomes.add("Festas e eventos");
+
+        initRecyclerViewCategoria();
+    }
+
+    private void initRecyclerViewCategoria(){
+
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL,false);
+        RecyclerView recyclerView = findViewById(R.id.recycler_category);
+        recyclerView.setLayoutManager(linearLayoutManager);
+        CategoriaRecyclerViewAdapter adapter = new CategoriaRecyclerViewAdapter(this,mNomes,mImagensURL);
+        recyclerView.setAdapter(adapter);
     }
 
 }
